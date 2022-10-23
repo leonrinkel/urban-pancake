@@ -25,19 +25,19 @@ void start(void)
     RCC_APB1ENR->USART2EN = 0b1;
 
     /* set alternative mode for USART2 RX/TX pins */
-    GPIOA_MODER->MODER2  = 0b10;
-    GPIOA_MODER->MODER15 = 0b10;
+    GPIOA->MODER.MODER2  = ALTERNATE_FUNCTION_MODE;
+    GPIOA->MODER.MODER15 = ALTERNATE_FUNCTION_MODE;
 
     /* set output mode for LED pin */
-    GPIOB_MODER->MODER3  = 0b01;
+    GPIOB->MODER.MODER3 = GENERAL_PURPOSE_OUTPUT_MODE;
 
     /* set high speed mode for USART2 RX/TX pins */
-    GPIOA_OSPEEDR->OSPEEDR2 = 0b11;
-    GPIOA_OSPEEDR->OSPEEDR15 = 0b11;
+    GPIOA->OSPEEDR.OSPEEDR2  = HIGH_SPEED;
+    GPIOA->OSPEEDR.OSPEEDR15 = HIGH_SPEED;
 
     /* set alternative function 1 for USART2 RX/TX pins */
-    GPIOA_AFRL->AFSEL2  = 0b0001;
-    GPIOA_AFRH->AFSEL15 = 0b0001;
+    GPIOA->AFRL.AFSEL2  = AF1;
+    GPIOA->AFRH.AFSEL15 = AF1;
 
     /* 115200 baud for USART2 at 48 MHz core clock */
     USART2_BRR->BRR = 0x1A1;
@@ -54,7 +54,7 @@ void start(void)
     for (;;)
     {
         /* toggle LED */
-        GPIOB_ODR->ODR3 ^= 0b1;
+        GPIOB->ODR.ODR3 ^= 0b1;
 
         /* transmit message */
         for (int i = 0; i < msg_len; i++)
